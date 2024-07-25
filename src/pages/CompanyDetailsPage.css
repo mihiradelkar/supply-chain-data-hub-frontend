@@ -1,0 +1,27 @@
+/* src/pages/CompanyDetailsPage.css */
+.company-details {
+  padding: 20px;
+}
+
+.map-container {
+  height: 400px;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+@media (max-width: 600px) {
+  .map-container {
+    height: 300px;
+  }
+}
+
+.back-link {
+  display: inline-block;
+  margin-top: 20px;
+  color: #007bff;
+  text-decoration: none;
+}
+
+.back-link:hover {
+  text-decoration: underline;
+}
