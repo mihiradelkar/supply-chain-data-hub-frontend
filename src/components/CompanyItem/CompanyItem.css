@@ -1,0 +1,23 @@
+.company-item {
+  padding: 16px;
+  width: 100%;
+  max-width: 300px;
+  text-align: center;
+}
+
+.company-item h2 {
+  margin-bottom: 8px;
+}
+
+.company-item p {
+  margin-bottom: 16px;
+}
+
+.company-item a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.company-item a:hover {
+  text-decoration: underline;
+}
