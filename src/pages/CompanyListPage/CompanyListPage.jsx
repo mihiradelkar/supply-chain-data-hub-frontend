@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { fetchCompanies } from "../../services/api";
 import CompanyItem from "../../components/CompanyItem/CompanyItem";
 import "./CompanyListPage.css";
-import { Link } from "react-router-dom";
 
 const CompanyListPage = () => {
   const [companies, setCompanies] = useState([]);
@@ -28,6 +27,9 @@ const CompanyListPage = () => {
   return (
     <div>
       <div className="center-container">
+        <h1>Find Your Company Here!</h1>
+      </div>
+      <div className="center-container">
         <input
           type="text"
           className="input-search floating-box"
@@ -45,9 +47,6 @@ const CompanyListPage = () => {
           ))}
         </div>
       )}
-      <Link to="/companies-heat-map" className="companies-heat-map">
-        All Companies Map
-      </Link>
     </div>
   );
 };

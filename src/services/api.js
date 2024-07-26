@@ -7,13 +7,13 @@ export const fetchCompanies = async () => {
   return response.data;
 };
 
-export const fetchAllLocations = async () => {
-  const response = await axios.get(`${API_URL}/locations`);
+export const fetchCompanyDetails = async (companyId) => {
+  const response = await axios.get(`${API_URL}/companies/${companyId}`);
   return response.data;
 };
 
-export const fetchCompanyDetails = async (companyId) => {
-  const response = await axios.get(`${API_URL}/companies/${companyId}`);
+export const fetchAllLocations = async () => {
+  const response = await axios.get(`${API_URL}/locations/all`);
   return response.data;
 };
 

@@ -1,16 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { fetchCompanyDetails, fetchCompanyLocations } from "../../services/api";
-import CompanyDetails from "../../components/CompanyDetails/CompanyDetails";
 import CompanyMap from "../../components/CompanyDetails/CompanyMap";
-// import CompanyBarChart from "../../components/CompanyDetails/CompanyBarChart";
-// import CompanyScatterPlot from "../../components/CompanyDetails/CompanyScatterPlot";
 import "./CompanyDetailsPage.css";
 
 const CompanyDetailsPage = () => {
   const { companyId } = useParams();
   const [company, setCompany] = useState(null);
   const [locations, setLocations] = useState([]);
+  const [selectedLocation, setSelectedLocation] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -24,31 +22,42 @@ const CompanyDetailsPage = () => {
 
   if (!company) return <div>Loading...</div>;
 
-  // const locationData = locations.map((location) => ({
-  //   name: location.name,
-  //   latitude: location.latitude,
-  //   longitude: location.longitude,
-  // }));
-
-  const heatmapData = locations.map((location) => [
-    location.latitude,
-    location.longitude,
-    1,
-  ]);
+  const handleLocationClick = (location) => {
+    setSelectedLocation(location);
+  };
 
   return (
     <div className="company-details">
-      <CompanyDetails company={company} />
-      <CompanyMap
-        company={company}
-        locations={locations}
-        heatmapData={heatmapData}
-      />
-      {/* <CompanyBarChart data={locationData} /> */}
-      {/* <CompanyScatterPlot data={locationData} /> */}
-      <Link to="/" className="back-link">
-        Back to List
-      </Link>
+      <h1>{company.name}</h1>
+      <p>{company.address}</p>
+      <div className="content">
+        <div className="map-container">
+          <CompanyMap
+            company={company}
+            locations={locations}
+            selectedLocation={selectedLocation}
+          />
+        </div>
+        <div className="location-list">
+          <h2>Locations</h2>
+          <ul>
+            {locations.map((location) => (
+              <li
+                key={location.location_id}
+                onClick={() => handleLocationClick(location)}
+                className={
+                  selectedLocation &&
+                  selectedLocation.location_id === location.location_id
+                    ? "selected"
+                    : ""
+                }
+              >
+                {location.name} - {location.address}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
     </div>
   );
 };

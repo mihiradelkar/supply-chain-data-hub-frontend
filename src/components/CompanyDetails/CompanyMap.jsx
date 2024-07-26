@@ -7,18 +7,18 @@ import iconUrl from "leaflet/dist/images/marker-icon.png";
 import iconRetinaUrl from "leaflet/dist/images/marker-icon-2x.png";
 import shadowUrl from "leaflet/dist/images/marker-shadow.png";
 
-// default icon options
+// Set default icon options
 L.Icon.Default.mergeOptions({
   iconRetinaUrl,
   iconUrl,
   shadowUrl,
-  iconSize: [25, 41],
-  iconAnchor: [12, 41],
-  popupAnchor: [1, -34],
-  shadowSize: [41, 41],
+  iconSize: [16, 25], // Smaller size
+  iconAnchor: [8, 25], // Anchor adjusted for smaller size
+  popupAnchor: [1, -20], // Popup anchor adjusted for smaller size
+  shadowSize: [25, 25], // Shadow size adjusted for smaller size
 });
 
-const CompanyMap = ({ company, locations, heatmapData }) => (
+const CompanyMap = ({ company, locations, selectedLocation }) => (
   <MapContainer
     center={[company.latitude, company.longitude]}
     zoom={13}
@@ -28,42 +28,46 @@ const CompanyMap = ({ company, locations, heatmapData }) => (
       url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       attribution="&copy; OpenStreetMap contributors"
     />
-    <Marker position={[company.latitude, company.longitude]}>
-      <Popup>
-        {company.name}
-        <br />
-        {company.address}
-      </Popup>
-    </Marker>
-    {locations.map((location) => (
-      <Marker
-        key={location.location_id}
-        position={[location.latitude, location.longitude]}
-      >
-        <Popup>
-          {location.name}
-          <br />
-          {location.address}
-        </Popup>
-      </Marker>
-    ))}
-    <HeatmapLayer points={heatmapData} />
+    <Markers
+      company={company}
+      locations={locations}
+      selectedLocation={selectedLocation}
+    />
   </MapContainer>
 );
 
-const HeatmapLayer = ({ points }) => {
+const Markers = ({ company, locations, selectedLocation }) => {
   const map = useMap();
 
   useEffect(() => {
-    const heatLayer = L.heatLayer(points, { radius: 25 });
-    map.addLayer(heatLayer);
+    if (selectedLocation) {
+      map.setView([selectedLocation.latitude, selectedLocation.longitude], 13);
+    }
+  }, [selectedLocation, map]);
 
-    return () => {
-      map.removeLayer(heatLayer);
-    };
-  }, [map, points]);
-
-  return null;
+  return (
+    <>
+      <Marker position={[company.latitude, company.longitude]}>
+        <Popup>
+          {company.name}
+          <br />
+          {company.address}
+        </Popup>
+      </Marker>
+      {locations.map((location) => (
+        <Marker
+          key={location.location_id}
+          position={[location.latitude, location.longitude]}
+        >
+          <Popup>
+            {location.name}
+            <br />
+            {location.address}
+          </Popup>
+        </Marker>
+      ))}
+    </>
+  );
 };
 
 export default CompanyMap;

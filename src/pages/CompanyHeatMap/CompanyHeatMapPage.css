@@ -1,0 +1,35 @@
+.heatmap-page {
+  padding: 20px;
+  text-align: center;
+}
+
+.title {
+  font-size: 2em;
+  margin-bottom: 20px;
+  color: #007bff;
+}
+
+.map-container {
+  padding-left: 5%;
+  padding-right: 5%;
+  margin-bottom: 20px;
+}
+
+.back-link {
+  display: inline-block;
+  margin-top: 20px;
+  color: #007bff;
+  text-decoration: none;
+}
+
+.back-link:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .map-container {
+    width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+  }
+}

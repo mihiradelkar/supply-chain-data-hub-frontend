@@ -4,20 +4,6 @@ import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import "leaflet.heat";
 import { fetchAllLocations } from "../../services/api";
-import iconUrl from "leaflet/dist/images/marker-icon.png";
-import iconRetinaUrl from "leaflet/dist/images/marker-icon-2x.png";
-import shadowUrl from "leaflet/dist/images/marker-shadow.png";
-
-// Set default icon options
-L.Icon.Default.mergeOptions({
-  iconRetinaUrl,
-  iconUrl,
-  shadowUrl,
-  iconSize: [8, 10],
-  iconAnchor: [0, 0],
-  popupAnchor: [0, 0],
-  shadowSize: [0, 0],
-});
 
 const AllCompaniesMap = () => {
   const [locations, setLocations] = useState([]);
@@ -38,8 +24,8 @@ const AllCompaniesMap = () => {
 
   return (
     <MapContainer
-      center={[20, 0]} // Centered at an appropriate location (you can adjust this)
-      zoom={2}
+      center={[35, -95]} // Centered at an appropriate location (you can adjust this)
+      zoom={4}
       className="map-container"
     >
       <TileLayer
