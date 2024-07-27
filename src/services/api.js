@@ -21,3 +21,17 @@ export const fetchCompanyLocations = async (companyId) => {
   const response = await axios.get(`${API_URL}/locations/${companyId}`);
   return response.data;
 };
+
+export const fetchTopCitiesWithMostJobs = async () => {
+  const response = await axios.get(
+    `${API_URL}/statistics/top-cities-with-most-jobs`
+  );
+  return response.data;
+};
+
+export const fetchTopStatesWithMostJobs = async () => {
+  const response = await axios.get(
+    `${API_URL}/statistics/top-states-with-most-jobs`
+  );
+  return response.data;
+};

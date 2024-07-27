@@ -1,24 +1,22 @@
-import React, { useState, useEffect } from "react";
-import { fetchCompanies } from "../../services/api";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchCompaniesThunk, setSearch } from "../../store/companySlice";
 import CompanyItem from "../../components/CompanyItem/CompanyItem";
+import { useTranslation } from "react-i18next";
 import "./CompanyListPage.css";
 
 const CompanyListPage = () => {
-  const [companies, setCompanies] = useState([]);
-  const [search, setSearch] = useState("");
-  const [error, setError] = useState(null);
+  const { t } = useTranslation();
+  const dispatch = useDispatch();
+  const { companies, search, status, error } = useSelector(
+    (state) => state.companies
+  );
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const companiesData = await fetchCompanies();
-        setCompanies(companiesData);
-      } catch (error) {
-        setError("Failed to fetch companies");
-      }
-    };
-    fetchData();
-  }, []);
+    if (status === "idle") {
+      dispatch(fetchCompaniesThunk());
+    }
+  }, [status, dispatch]);
 
   const filteredCompanies = companies.filter((company) =>
     company.name.toLowerCase().includes(search.toLowerCase())
@@ -27,21 +25,21 @@ const CompanyListPage = () => {
   return (
     <div>
       <div className="center-container">
-        <h1>Find Your Company Here!</h1>
+        <h1>{t("findYourCompany")}</h1>
       </div>
       <div className="center-container">
         <input
           type="text"
           className="input-search floating-box"
-          placeholder="Search companies..."
+          placeholder={t("searchCompanies")}
           value={search}
-          onChange={(e) => setSearch(e.target.value)}
+          onChange={(e) => dispatch(setSearch(e.target.value))}
         />
       </div>
-      {error ? (
-        <p className="error">{error}</p>
-      ) : (
-        <div className="company-list ">
+      {status === "loading" && <p>Loading...</p>}
+      {status === "failed" && <p className="error">{error}</p>}
+      {status === "succeeded" && (
+        <div className="company-list">
           {filteredCompanies.map((company) => (
             <CompanyItem key={company.company_id} company={company} />
           ))}

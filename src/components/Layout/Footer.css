@@ -1,4 +1,7 @@
 .footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background-color: #e7e6e6;
   color: #6c757d;
   padding: 20px 0;
@@ -8,4 +11,9 @@
 .footer .container {
   max-width: 1200px;
   margin: 0 auto;
+}
+
+.language-switcher {
+  margin: 0 auto;
+  max-width: 400px;
 }
