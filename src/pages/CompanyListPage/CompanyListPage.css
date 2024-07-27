@@ -1,0 +1,27 @@
+.center-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 10vh;
+}
+
+.input-search {
+  width: 100%;
+  max-width: 80%;
+  margin: 16px auto;
+  padding: 8px;
+  font-size: 20px;
+  text-align: center;
+}
+
+.company-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+}
+
+.error {
+  color: red;
+  text-align: center;
+}
